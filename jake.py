@@ -3,7 +3,7 @@ import time
 import os
 
 
-class PlayerOne:
+class PlayerOne(pygame.sprite.Sprite):
 
     VEL = 15
     origin = {
@@ -21,31 +21,36 @@ class PlayerOne:
     leftLegDest = origin["x"] + 87, origin["y"] + 292
     rightLegDest = origin["x"] + 10, origin["y"] + 300
 
+    assestsPath = "assets/jake/sprite/right"
+    sprite = pygame.sprite.Group()
+    counter = 0
+
 
     def __init__(self):
-        self.chestImg = pygame.image.load(os.path.join("assets/jake", "chest.png"))
-        self.headImg = pygame.image.load(os.path.join("assets/jake", "head.png"))
-        self.mouthImg = pygame.image.load(os.path.join("assets/jake", "mouth.png"))
-        self.leftArmImg = pygame.image.load(os.path.join("assets/jake", "left_arm.png"))
-        self.rightArmImg = pygame.image.load(os.path.join("assets/jake", "right_arm.png"))
-        self.leftThighImg = pygame.transform.rotate(
-            pygame.image.load(os.path.join("assets/jake", "left_thigh.png")),
-            -10)  # Degrees rotated
-        self.rightThighImg = pygame.image.load(os.path.join("assets/jake", "right_thigh.png"))
-        self.leftLegImg = pygame.image.load(os.path.join("assets/jake", "left_leg.png"))
-        self.rightLegImg = pygame.image.load(os.path.join("assets/jake", "right_leg.png"))
+        # self.chestImg = pygame.image.load(os.path.join("assets/jake", "chest.png"))
+        # self.headImg = pygame.image.load(os.path.join("assets/jake", "head.png"))
+        # self.mouthImg = pygame.image.load(os.path.join("assets/jake", "mouth.png"))
+        # self.leftArmImg = pygame.image.load(os.path.join("assets/jake", "left_arm.png"))
+        # self.rightArmImg = pygame.image.load(os.path.join("assets/jake", "right_arm.png"))
+        # self.leftThighImg = pygame.transform.rotate(
+        #     pygame.image.load(os.path.join("assets/jake", "left_thigh.png")),
+        #     -10)  # Degrees rotated
+        # self.rightThighImg = pygame.image.load(os.path.join("assets/jake", "right_thigh.png"))
+        # self.leftLegImg = pygame.image.load(os.path.join("assets/jake", "left_leg.png"))
+        # self.rightLegImg = pygame.image.load(os.path.join("assets/jake", "right_leg.png"))
+        #
+        # self.chest = pygame.Rect(self.chestDest[0], self.chestDest[1], self.chestImg.get_width(), self.chestImg.get_height())
+        # self.head = pygame.Rect(self.headDest[0], self.headDest[1], self.headImg.get_width(), self.headImg.get_height())
+        # self.mouth = pygame.Rect(self.mouthDest[0], self.mouthDest[1], self.mouthImg.get_width(), self.mouthImg.get_height())
+        # self.leftArm = pygame.Rect(self.leftArmDest[0], self.leftArmDest[1], self.leftLegImg.get_width(), self.leftArmImg.get_height())
+        # self.rightArm = pygame.Rect(self.rightArmDest[0], self.rightArmDest[1], self.rightArmImg.get_width(), self.rightArmImg.get_height())
+        # self.leftThigh = pygame.Rect(self.leftThighDest[0], self.leftThighDest[1], self.leftThighImg.get_width(), self.leftThighImg.get_height())
+        # self.rightThigh = pygame.Rect(self.rightThighDest[0], self.rightThighDest[1], self.rightThighImg.get_width(), self.rightThighImg.get_height())
+        # self.leftLeg = pygame.Rect(self.leftLegDest[0], self.leftLegDest[1], self.leftLegImg.get_width(), self.leftLegImg.get_height())
+        # self.rightLeg = pygame.Rect(self.rightLegDest[0], self.rightLegDest[1], self.rightLegImg.get_width(), self.rightLegImg.get_height())
 
-        self.chest = pygame.Rect(self.chestDest[0], self.chestDest[1], self.chestImg.get_width(), self.chestImg.get_height())
-        self.head = pygame.Rect(self.headDest[0], self.headDest[1], self.headImg.get_width(), self.headImg.get_height())
-        self.mouth = pygame.Rect(self.mouthDest[0], self.mouthDest[1], self.mouthImg.get_width(), self.mouthImg.get_height())
-        self.leftArm = pygame.Rect(self.leftArmDest[0], self.leftArmDest[1], self.leftLegImg.get_width(), self.leftArmImg.get_height())
-        self.rightArm = pygame.Rect(self.rightArmDest[0], self.rightArmDest[1], self.rightArmImg.get_width(), self.rightArmImg.get_height())
-        self.leftThigh = pygame.Rect(self.leftThighDest[0], self.leftThighDest[1], self.leftThighImg.get_width(), self.leftThighImg.get_height())
-        self.rightThigh = pygame.Rect(self.rightThighDest[0], self.rightThighDest[1], self.rightThighImg.get_width(), self.rightThighImg.get_height())
-        self.leftLeg = pygame.Rect(self.leftLegDest[0], self.leftLegDest[1], self.leftLegImg.get_width(), self.leftLegImg.get_height())
-        self.rightLeg = pygame.Rect(self.rightLegDest[0], self.rightLegDest[1], self.rightLegImg.get_width(), self.rightLegImg.get_height())
-
-        self.build_body()
+        # self.build_body()
+        self._load_sprites()
 
 
     def build_body(self) -> list:
@@ -128,3 +133,41 @@ class PlayerOne:
             self.mouth.y += 50
             time.sleep(1)
             self.mouth.y -= 50
+
+
+    def _load_sprites(self):
+        self.images = []
+        listDir = os.listdir(self.assestsPath)
+        for img in listDir:
+            self.images.append(pygame.image.load(os.path.join(self.assestsPath, img)))
+
+        # self.sprites.append(pygame.image.load(os.path.join("assets/jake/sprite/right", "right_walk_1.png")))
+        # self.sprites.append(pygame.image.load(os.path.join("assets/jake/sprite/right", "right_walk_2.png")))
+        # self.sprites.append(pygame.image.load(os.path.join("assets/jake/sprite/right", "right_walk_3.png")))
+        # self.sprites.append(pygame.image.load(os.path.join("assets/jake/sprite/right", "right_walk_4.png")))
+        # self.sprites.append(pygame.image.load(os.path.join("assets/jake/sprite/right", "right_walk_5.png")))
+        # self.sprites.append(pygame.image.load(os.path.join("assets/jake/sprite/right", "right_walk_6.png")))
+
+        self.index = 0
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.center = [self.origin["x"], self.origin["y"]]
+
+
+    def update(self):
+        spriteSpeed = 4
+        self.counter += 1
+
+        if self.counter >= spriteSpeed and self.index < len(self.image) - 1:
+            self.counter = 0
+            self.index += 1
+            self.image = self.images[self.index]
+
+        if self.index >= len(self.images) - 1 and self.counter >= spriteSpeed:
+            self.kill()
+
+
+    def draw(self, Window):
+        self.sprite.draw(Window)
+        self.update()
+        self.add(self.sprite)
